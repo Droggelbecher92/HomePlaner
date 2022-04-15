@@ -1,5 +1,6 @@
 import React, {FormEvent, useState} from "react";
 import axios from "axios";
+import TextField from '@mui/material/TextField';
 
 export default function LoginRegisterForm(){
     const [newUsername, setNewUsername] = useState('')
@@ -63,7 +64,7 @@ export default function LoginRegisterForm(){
         <div className="App">
             <h2>Register</h2>
             <form onSubmit={createUser}>
-                <input type="text" placeholder={'Dein Nutzername'} value={newUsername} onChange={ev => setNewUsername(ev.target.value)}/>
+                <TextField type="text" placeholder={'Dein Nutzername'} value={newUsername} onChange={ev => setNewUsername(ev.target.value)}/>
                 <input type="password" placeholder={'Passwort'} value={newPasswordOne} onChange={ev => setNewPasswordOne(ev.target.value)}/>
                 <input type="password" placeholder={'Passwort wiederholen'} value={newPasswordTwo} onChange={ev => setNewPasswordTwo(ev.target.value)}/>
                 <button type='submit'>Registrieren</button>
