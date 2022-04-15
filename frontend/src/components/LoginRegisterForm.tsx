@@ -1,6 +1,6 @@
 import React, {FormEvent, useState} from "react";
 import axios from "axios";
-import TextField from '@mui/material/TextField';
+import {TextField, Button, Typography} from '@mui/material';
 
 export default function LoginRegisterForm(){
     const [newUsername, setNewUsername] = useState('')
@@ -43,6 +43,7 @@ export default function LoginRegisterForm(){
             .then(response => response.data)
             .then(data => setToken(data.token))
             .catch(e => setError(e.message))
+        setChecker(username)
         setUsername('')
         setPassword('')
     }
@@ -62,22 +63,22 @@ export default function LoginRegisterForm(){
 
     return (
         <div className="App">
-            <h2>Register</h2>
+            <Typography variant="h2">Register</Typography>
             <form onSubmit={createUser}>
-                <TextField type="text" placeholder={'Dein Nutzername'} value={newUsername} onChange={ev => setNewUsername(ev.target.value)}/>
-                <input type="password" placeholder={'Passwort'} value={newPasswordOne} onChange={ev => setNewPasswordOne(ev.target.value)}/>
-                <input type="password" placeholder={'Passwort wiederholen'} value={newPasswordTwo} onChange={ev => setNewPasswordTwo(ev.target.value)}/>
-                <button type='submit'>Registrieren</button>
+                <TextField margin="normal" fullWidth error={newUsername.length<5 && newUsername.length>0} label="Dein Nutzername" type="text" value={newUsername} onChange={ev => setNewUsername(ev.target.value)}/>
+                <TextField margin="normal" fullWidth type="password" label={'Passwort'} value={newPasswordOne} onChange={ev => setNewPasswordOne(ev.target.value)}/>
+                <TextField margin="normal" fullWidth type="password" label={'Passwort wiederholen'} value={newPasswordTwo} onChange={ev => setNewPasswordTwo(ev.target.value)}/>
+                <Button variant="outlined" type='submit'>Registrieren</Button>
             </form>
-            <h2>Login</h2>
+            <Typography variant="h2">Login</Typography>
             <form onSubmit={login}>
-                <input type="text" placeholder={'Nutzername'} value={username} onChange={ev => setUsername(ev.target.value)}/>
-                <input type="password" placeholder={'Passwort'} value={password} onChange={ev => setPassword(ev.target.value)}/>
-                <button type='submit'>Login</button>
+                <TextField margin="normal" fullWidth variant="filled" type="text" label={'Nutzername'} value={username} onChange={ev => setUsername(ev.target.value)}/>
+                <TextField margin="normal" fullWidth variant="filled" type="password" label={'Passwort'} value={password} onChange={ev => setPassword(ev.target.value)}/>
+                <Button variant="outlined" type='submit'>Login</Button>
             </form>
             {error && <h1>{error}</h1>}
             {token && <div>
-                <button onClick={getInfos}>Eingeloggt, versuch es!</button>
+                <Button onClick={getInfos}>Eingeloggt, versuch es!</Button>
                 <p>wenn alles klappt ist hier dein Username: {checker && checker}</p>
             </div>}
         </div>

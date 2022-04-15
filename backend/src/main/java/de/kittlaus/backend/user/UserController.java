@@ -35,7 +35,4 @@ public class UserController {
         Optional<MyUserDto> dto = Optional.of(MyUserDto.builder().username(byUsername.getUsername()).role(byUsername.getRole()).build());
         return ResponseEntity.of(dto);
     }
-
-
-
 }
