@@ -1,7 +1,7 @@
 import React, {FormEvent, useState} from "react";
 import axios from "axios";
 
-export default function ExamplePage(){
+export default function LoginRegisterForm(){
     const [newUsername, setNewUsername] = useState('')
     const [newPasswordOne, setNewPasswordOne] = useState('')
     const [newPasswordTwo, setNewPasswordTwo] = useState('')
