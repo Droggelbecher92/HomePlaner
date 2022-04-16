@@ -1,8 +1,10 @@
 package de.kittlaus.backend.user;
 
 
+import de.kittlaus.backend.models.user.MyRegisterUser;
 import de.kittlaus.backend.models.user.MyUser;
 import de.kittlaus.backend.models.user.MyUserDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +17,13 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
-    public ResponseEntity<MyUser> createUser(@RequestBody MyUser user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
+    public ResponseEntity<MyUser> createUser(@RequestBody MyRegisterUser user) {
         return userService.createUser(user);
     }
 

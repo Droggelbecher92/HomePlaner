@@ -1,10 +1,11 @@
 package de.kittlaus.backend.models.security;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Token {
 
     private String token;
