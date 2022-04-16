@@ -3,6 +3,7 @@ import axios from "axios";
 import {TextField, Button, Typography, Grid} from '@mui/material';
 import {loginUser, registerNewUser} from "../service/apiService";
 import {useAuth} from "../auth/AuthProvider";
+import {useNavigate} from "react-router-dom";
 
 export default function LoginRegisterForm() {
     const [newUsername, setNewUsername] = useState('')
@@ -15,6 +16,7 @@ export default function LoginRegisterForm() {
     const [errorPass, setErrorPass] = useState('')
 
     const auth = useAuth()
+    const nav = useNavigate()
 
 
     const createUser = () => {
@@ -51,6 +53,7 @@ export default function LoginRegisterForm() {
 
     const login = () => {
         auth.login(username,password)
+            .then(()=>nav('/'))
             .catch(() => {
                 setErrorLogin("Ungültige Eingaben")
             })
