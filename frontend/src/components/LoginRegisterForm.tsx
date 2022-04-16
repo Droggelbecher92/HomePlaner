@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {TextField, Button, Typography, Grid} from '@mui/material';
+import {loginUser, registerNewUser} from "../service/apiService";
 
 export default function LoginRegisterForm() {
     const [newUsername, setNewUsername] = useState('')
@@ -18,8 +19,7 @@ export default function LoginRegisterForm() {
             setErrorPass("Passwörter nicht identisch oder zu kurz.")
             setNewPasswordTwo('')
         } else {
-            axios.post(`/api/user`,
-                {'username': newUsername, 'password': newPasswordOne, 'passwordAgain':newPasswordTwo})
+           registerNewUser(newUsername, newPasswordOne, newPasswordTwo)
                 .then(() => {
                     setUsername(newUsername)
                     setPassword(newPasswordOne)
@@ -47,8 +47,7 @@ export default function LoginRegisterForm() {
     }
 
     const login = () => {
-        axios.post(`/auth`, {'username': username, 'password': password})
-            .then(response => response.data)
+        loginUser(username,password)
             .then(data => console.log(data.token))
             .catch(() => {
                 setErrorLogin("Ungültige Eingaben")
