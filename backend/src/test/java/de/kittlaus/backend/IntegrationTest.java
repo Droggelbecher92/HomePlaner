@@ -40,6 +40,28 @@ class IntegrationTest {
         assert(actual.getUsername()).equals(testUser.getUsername());
     }
 
+    @Test
+    @Order(2)
+    void shouldDenyNonMatchingPasswordOnRegister(){
+        //GIVEN
+        MyRegisterUser testUser = MyRegisterUser.builder().username("Peter1").password("12345678").passwordAgain("1234567").build();
+        //WHEN
+        ResponseEntity<MyUser> actualEnt = testRestTemplate.exchange("/api/user", HttpMethod.POST, new HttpEntity<>(testUser), MyUser.class);
+        //THEN
+        assert(actualEnt.getStatusCode()).is4xxClientError();
+    }
+
+    @Test
+    @Order(3)
+    void shouldDenyExistingUsernameOnRegister(){
+        //GIVEN
+        MyRegisterUser testUser = MyRegisterUser.builder().username("Peter").password("12345678").passwordAgain("12345678").build();
+        //WHEN
+        ResponseEntity<MyUser> actualEnt = testRestTemplate.exchange("/api/user", HttpMethod.POST, new HttpEntity<>(testUser), MyUser.class);
+        //THEN
+        assert(actualEnt.getStatusCode()).is4xxClientError();
+    }
+
 
 
     //Hilfmethoden

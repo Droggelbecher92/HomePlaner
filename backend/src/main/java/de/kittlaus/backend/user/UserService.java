@@ -24,7 +24,7 @@ public class UserService {
 
     public ResponseEntity<MyUser> createUser(MyRegisterUser user) {
         if (userRepo.findByUsername(user.getUsername()).isPresent()){
-            return ResponseEntity.status(HttpStatus.IM_USED).body(MyUser.builder().build());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(MyUser.builder().build());
         } else if (!user.getPassword().equals(user.getPasswordAgain())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MyUser.builder().build());
         }
