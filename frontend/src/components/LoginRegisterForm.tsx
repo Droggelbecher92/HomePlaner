@@ -1,6 +1,8 @@
 import React, {useState} from "react";
-import axios from "axios";
 import {TextField, Button, Typography, Grid} from '@mui/material';
+import {registerNewUser} from "../service/apiService";
+import {useAuth} from "../auth/AuthProvider";
+import {useNavigate} from "react-router-dom";
 
 export default function LoginRegisterForm() {
     const [newUsername, setNewUsername] = useState('')
@@ -12,14 +14,16 @@ export default function LoginRegisterForm() {
     const [errorName, setErrorName] = useState('')
     const [errorPass, setErrorPass] = useState('')
 
+    const auth = useAuth()
+    const nav = useNavigate()
+
 
     const createUser = () => {
         if (!(newPasswordOne === newPasswordTwo) || newPasswordOne.length < 5) {
             setErrorPass("Passwörter nicht identisch oder zu kurz.")
             setNewPasswordTwo('')
         } else {
-            axios.post(`/api/user`,
-                {'username': newUsername, 'password': newPasswordOne, 'passwordAgain':newPasswordTwo})
+           registerNewUser(newUsername, newPasswordOne, newPasswordTwo)
                 .then(() => {
                     setUsername(newUsername)
                     setPassword(newPasswordOne)
@@ -47,9 +51,8 @@ export default function LoginRegisterForm() {
     }
 
     const login = () => {
-        axios.post(`/auth`, {'username': username, 'password': password})
-            .then(response => response.data)
-            .then(data => console.log(data.token))
+        auth.login(username,password)
+            .then(()=>nav('/'))
             .catch(() => {
                 setErrorLogin("Ungültige Eingaben")
             })

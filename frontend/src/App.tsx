@@ -1,14 +1,19 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import LoginRegisterForm from "./components/LoginRegisterForm";
+import LoginPage from "./pages/LoginPage";
+import MainPage from "./pages/MainPage";
+import AuthProvider from "./auth/AuthProvider";
 
 export default function App() {
     return(
         <BrowserRouter>
-            <Routes>
-                <Route path={'/'} element={<LoginRegisterForm/>}/>
-            </Routes>
+            <AuthProvider>
+                <Routes>
+                    <Route path={'/'} element={<MainPage/>}/>
+                    <Route path={'/login'} element={<LoginPage/>}/>
+                </Routes>
+            </AuthProvider>
         </BrowserRouter>
     )
 }
