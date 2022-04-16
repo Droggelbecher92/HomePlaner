@@ -4,6 +4,7 @@ package de.kittlaus.backend.user;
 import de.kittlaus.backend.models.user.MyRegisterUser;
 import de.kittlaus.backend.models.user.MyUser;
 import de.kittlaus.backend.models.user.MyUserDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;

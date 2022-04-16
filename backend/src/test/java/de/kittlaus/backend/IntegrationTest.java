@@ -1,5 +1,7 @@
 package de.kittlaus.backend;
 
+import de.kittlaus.backend.models.security.Credentials;
+import de.kittlaus.backend.models.security.Token;
 import de.kittlaus.backend.models.user.MyRegisterUser;
 import de.kittlaus.backend.models.user.MyUser;
 import org.junit.jupiter.api.MethodOrderer;
@@ -10,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,6 +35,7 @@ class IntegrationTest {
         ResponseEntity<MyUser> actualEnt = testRestTemplate.exchange("/api/user", HttpMethod.POST, new HttpEntity<>(testUser), MyUser.class);
         //THEN
         assert(actualEnt.getStatusCode()).is2xxSuccessful();
+        assert(actualEnt.getStatusCode()).equals(HttpStatus.CREATED);
         MyUser actual = actualEnt.getBody();
         assert(actual.getUsername()).equals(testUser.getUsername());
     }
@@ -49,6 +49,7 @@ class IntegrationTest {
         ResponseEntity<MyUser> actualEnt = testRestTemplate.exchange("/api/user", HttpMethod.POST, new HttpEntity<>(testUser), MyUser.class);
         //THEN
         assert(actualEnt.getStatusCode()).is4xxClientError();
+        assert(actualEnt.getStatusCode()).equals(HttpStatus.BAD_REQUEST);
     }
 
     @Test
@@ -60,6 +61,31 @@ class IntegrationTest {
         ResponseEntity<MyUser> actualEnt = testRestTemplate.exchange("/api/user", HttpMethod.POST, new HttpEntity<>(testUser), MyUser.class);
         //THEN
         assert(actualEnt.getStatusCode()).is4xxClientError();
+        assert(actualEnt.getStatusCode()).equals(HttpStatus.CONFLICT);
+    }
+
+    @Test
+    @Order(4)
+    void shouldGetTokenWithValidCredentials(){
+        //GIVEN
+        Credentials testCredentials = Credentials.builder().password("12345678").username("Peter").build();
+        //WHEN
+        ResponseEntity<Token> actualEnt2 = testRestTemplate.postForEntity("/auth", testCredentials, Token.class);
+        //THEN
+        assert(actualEnt2.getStatusCode()).is2xxSuccessful();
+    }
+
+    @Test
+    @Order(5)
+    void shouldDenyWithInvalidCredentials(){
+        //GIVEN
+        Credentials testCredentials = Credentials.builder().password("1234567").username("Peter").build();
+        //WHEN
+        ResponseEntity<Token> actualEnt2 = testRestTemplate.postForEntity("/auth", testCredentials, Token.class);
+        //THEN
+        assert(actualEnt2.getStatusCode()).is4xxClientError();
+        assert(actualEnt2.getStatusCode()).equals(HttpStatus.BAD_REQUEST);
+
     }
 
 

@@ -28,6 +28,6 @@ public class UserService {
         } else if (!user.getPassword().equals(user.getPasswordAgain())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MyUser.builder().build());
         }
-        return ResponseEntity.ok(userRepo.save(MyUser.builder().username(user.getUsername()).password(passwordEncoder.encode(user.getPassword())).build()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userRepo.save(MyUser.builder().username(user.getUsername()).password(passwordEncoder.encode(user.getPassword())).role("USER").build()));
     }
 }
