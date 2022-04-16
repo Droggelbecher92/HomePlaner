@@ -6,13 +6,11 @@ export default function MainPage(){
     return(
         <Grid container direction={'column'}>
             <Grid item xs={8}>
-                <Heading/>
+                <Heading name={'SugarHome'}/>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={12}>
                 <ChooseFunction/>
             </Grid>
-
-
         </Grid>
     )
 }

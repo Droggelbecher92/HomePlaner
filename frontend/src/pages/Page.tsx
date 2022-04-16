@@ -1,17 +1,16 @@
 import {Grid} from "@mui/material";
-import LoginRegisterForm from "../components/LoginRegisterForm";
 import Heading from "../common/Heading";
+import {Outlet} from "react-router-dom";
 
-export default function LoginPage(){
+export default function Page(){
     return(
         <Grid container direction={'column'}>
             <Grid item xs={8}>
-                <Heading/>
+                <Heading name={'SugarHome'}/>
             </Grid>
-            <Grid item >
-                <LoginRegisterForm/>
+            <Grid item xs={12}>
+                <Outlet/>
             </Grid>
-
         </Grid>
     )
 }

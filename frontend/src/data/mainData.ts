@@ -1,14 +1,18 @@
 export const mainButtons = [
     {
-        function:"MoneyPlaner"
+        function:"MoneyPlaner",
+        link:"/planer"
     },
     {
-        function:"ToDo"
+        function:"ToDo",
+        link:"/todo"
     },
     {
-        function:"Storage"
+        function:"Storage",
+        link:"/storage"
     },
     {
-        function: "Cookbook"
+        function: "Cookbook",
+        link:"/cookbook"
     }
 ]
