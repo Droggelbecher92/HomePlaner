@@ -1,4 +1,4 @@
-import {Grid, Paper} from "@mui/material";
+import {Grid} from "@mui/material";
 import {todoData} from "../../data/tododummyData";
 import ToDoCard from "./ToDoCard";
 

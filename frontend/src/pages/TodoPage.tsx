@@ -1,7 +1,6 @@
-import {Fab, Grid} from "@mui/material";
+import {Grid} from "@mui/material";
 import Heading from "../common/Heading";
 import {Outlet} from "react-router-dom";
-import AddIcon from '@mui/icons-material/Add';
 
 export default function TodoPage(){
     return(

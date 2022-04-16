@@ -1,6 +1,5 @@
-import {Fab, Grid, Typography} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import TodoColumn from "./TodoColumn";
-import AddIcon from "@mui/icons-material/Add";
 
 export default function TodoGallery(){
     return(<>
