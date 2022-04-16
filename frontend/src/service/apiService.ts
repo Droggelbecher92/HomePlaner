@@ -1,5 +1,7 @@
 import axios from "axios";
 
+
+//USER
 export const loginUser = (username:string, password: string) => {
     return axios.post(`/auth`, {'username': username, 'password': password})
         .then(response => response.data)

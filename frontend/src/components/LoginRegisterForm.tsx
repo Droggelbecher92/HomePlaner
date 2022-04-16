@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import {TextField, Button, Typography, Grid} from '@mui/material';
 import {loginUser, registerNewUser} from "../service/apiService";
+import {useAuth} from "../auth/AuthProvider";
 
 export default function LoginRegisterForm() {
     const [newUsername, setNewUsername] = useState('')
@@ -12,6 +13,8 @@ export default function LoginRegisterForm() {
     const [errorLogin, setErrorLogin] = useState('')
     const [errorName, setErrorName] = useState('')
     const [errorPass, setErrorPass] = useState('')
+
+    const auth = useAuth()
 
 
     const createUser = () => {
@@ -47,8 +50,7 @@ export default function LoginRegisterForm() {
     }
 
     const login = () => {
-        loginUser(username,password)
-            .then(data => console.log(data.token))
+        auth.login(username,password)
             .catch(() => {
                 setErrorLogin("Ungültige Eingaben")
             })
