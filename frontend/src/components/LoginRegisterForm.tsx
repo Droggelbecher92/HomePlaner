@@ -1,86 +1,140 @@
-import React, {FormEvent, useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import {TextField, Button, Typography} from '@mui/material';
+import {TextField, Button, Typography, Grid} from '@mui/material';
 
-export default function LoginRegisterForm(){
+export default function LoginRegisterForm() {
     const [newUsername, setNewUsername] = useState('')
     const [newPasswordOne, setNewPasswordOne] = useState('')
     const [newPasswordTwo, setNewPasswordTwo] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [token, setToken] = useState('')
-    const [checker, setChecker] = useState('')
-    const [error, setError] = useState('')
+    const [errorLogin, setErrorLogin] = useState('')
+    const [errorName, setErrorName] = useState('')
+    const [errorPass, setErrorPass] = useState('')
 
 
-    const createUser = (event : FormEvent) => {
-        event.preventDefault()
-        setError('')
-        if (!(newPasswordOne===newPasswordTwo) || newPasswordOne.length<5){
-            setError("Passwörter nicht identisch oder zu kurz")
+    const createUser = () => {
+        if (!(newPasswordOne === newPasswordTwo) || newPasswordOne.length < 5) {
+            setErrorPass("Passwörter nicht identisch oder zu kurz.")
+            setNewPasswordTwo('')
         } else {
             axios.post(`/api/user`,
-                {'username':newUsername, 'password':newPasswordOne})
-                .then(response => response.data)
+                {'username': newUsername, 'password': newPasswordOne, 'passwordAgain':newPasswordTwo})
+                .then(() => {
+                    setUsername(newUsername)
+                    setPassword(newPasswordOne)
+                    setNewUsername('')
+                    setNewPasswordOne('')
+                    setNewPasswordTwo('')
+                })
                 .catch(e => {
-                    if (e.response.status===400){
-                        setError("Name schon vergeben")
+                    if (e.response.status === 400) {
+                        setErrorPass(`Passwörter nicht identisch`)
+                        setNewPasswordOne('')
+                        setNewPasswordTwo('')
+                    } else if (e.response.status === 409){
+                        setErrorName(`Nutzername ${newUsername} ist schon vergeben.`)
+                        setNewUsername('')
                     } else {
-                        setError(e.message)
+                        setErrorName(e.message)
+                        setNewUsername('')
+                        setNewPasswordOne('')
+                        setNewPasswordTwo('')
                     }
                 })
-            setNewUsername('')
-            setNewPasswordOne('')
-            setNewPasswordTwo('')
         }
 
     }
 
-    const login = (event : FormEvent) => {
-        event.preventDefault()
-        setError('')
-        axios.post(`/auth`, {'username':username, 'password':password})
+    const login = () => {
+        axios.post(`/auth`, {'username': username, 'password': password})
             .then(response => response.data)
-            .then(data => setToken(data.token))
-            .catch(e => setError(e.message))
-        setChecker(username)
-        setUsername('')
-        setPassword('')
+            .then(data => console.log(data.token))
+            .catch(() => {
+                setErrorLogin("Ungültige Eingaben")
+            })
     }
-
-
-    const getInfos = () => {
-        axios.get(`/api/user/me`,
-            {headers: {
-                    Authorization: `Bearer ${token}`,
-                }}
-        )
-            .then(response => response.data)
-            .then(data => setChecker(data.username))
-            .catch(e => setError(e.message))
-    }
-
 
     return (
-        <div className="App">
-            <Typography variant="h2">Register</Typography>
-            <form onSubmit={createUser}>
-                <TextField margin="normal" fullWidth error={newUsername.length<5 && newUsername.length>0} label="Dein Nutzername" type="text" value={newUsername} onChange={ev => setNewUsername(ev.target.value)}/>
-                <TextField margin="normal" fullWidth type="password" label={'Passwort'} value={newPasswordOne} onChange={ev => setNewPasswordOne(ev.target.value)}/>
-                <TextField margin="normal" fullWidth type="password" label={'Passwort wiederholen'} value={newPasswordTwo} onChange={ev => setNewPasswordTwo(ev.target.value)}/>
-                <Button variant="outlined" type='submit'>Registrieren</Button>
-            </form>
-            <Typography variant="h2">Login</Typography>
-            <form onSubmit={login}>
-                <TextField margin="normal" fullWidth variant="filled" type="text" label={'Nutzername'} value={username} onChange={ev => setUsername(ev.target.value)}/>
-                <TextField margin="normal" fullWidth variant="filled" type="password" label={'Passwort'} value={password} onChange={ev => setPassword(ev.target.value)}/>
-                <Button variant="outlined" type='submit'>Login</Button>
-            </form>
-            {error && <h1>{error}</h1>}
-            {token && <div>
-                <Button onClick={getInfos}>Eingeloggt, versuch es!</Button>
-                <p>wenn alles klappt ist hier dein Username: {checker && checker}</p>
-            </div>}
-        </div>
+        <Grid container direction={'column'}>
+            {!username && <Grid container spacing={2} justifyContent={'space-around'}>
+                <Grid item xs={12}>
+                    <Typography variant="h2" mt={2}>Register</Typography>
+                </Grid>
+                <Grid item xs={8}>
+                    <TextField
+                        fullWidth
+                        error={(newUsername.length < 5 && newUsername.length > 0 )|| errorName.length>0}
+                        helperText={errorName ?
+                            errorName : (newUsername.length < 5 && newUsername.length > 0 ) ?
+                            "Nutzername mit mindestens 5 Zeichen":""}
+                        label="Dein Nutzername"
+                        type="text"
+                        value={newUsername}
+                        onChange={ev => setNewUsername(ev.target.value)}/>
+                </Grid>
+                {newUsername && <><Grid item xs={8}>
+                    <TextField
+                        fullWidth
+                        type="password"
+                        label={'Passwort'}
+                        helperText={newPasswordOne.length<7 && "Mindestens 7 Zeichen"}
+                        value={newPasswordOne}
+                        onChange={ev => setNewPasswordOne(ev.target.value)}/>
+                </Grid>
+                <Grid item xs={8}>
+                <TextField
+                    fullWidth
+                    error={errorPass.length>0}
+                    helperText={errorPass && errorPass}
+                    type="password"
+                    label={'Passwort wiederholen'}
+                    value={newPasswordTwo}
+                    onChange={ev => {
+                        setErrorPass('')
+                        setNewPasswordTwo(ev.target.value)
+                    }}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button variant="outlined" onClick={createUser}>Registrieren</Button>
+                </Grid></>}
+            </Grid>}
+            {!newUsername && <Grid container spacing={2} justifyContent={'space-around'}>
+                <Grid item xs={12}>
+                    <Typography variant="h2" mt={2}>Login</Typography>
+                </Grid>
+                <Grid item xs={8}>
+                    <TextField
+                        fullWidth
+                        error={errorLogin.length>0}
+                        type="text"
+                        label={'Dein Nutzername'}
+                        value={username}
+                        onChange={ev => {
+                            setUsername(ev.target.value)
+                            setErrorLogin('')
+                        }}/>
+                </Grid>
+                { username && <>
+                <Grid item xs={8}>
+                    <TextField
+                        error={errorLogin.length>0}
+                        helperText={errorLogin}
+                        fullWidth
+                        type="password"
+                        label={'Passwort'}
+                        value={password}
+                        onChange={ev => {
+                            setErrorLogin('')
+                            setPassword(ev.target.value)
+                        }}/>
+                </Grid>
+                <Grid item xs={8}>
+                    <Button variant="outlined" onClick={login}>Login</Button>
+                </Grid>
+                </>}
+            </Grid>}
+        </Grid>
+
     );
 }
