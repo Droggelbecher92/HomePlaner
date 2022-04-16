@@ -1,4 +1,4 @@
-import {Button, Grid, Paper, Typography} from "@mui/material";
+import {Grid, Paper, Typography} from "@mui/material";
 import {mainButtons} from "../../data/mainData";
 
 export default function ChooseFunction(){

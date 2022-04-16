@@ -1,7 +1,6 @@
 import React, {useState} from "react";
-import axios from "axios";
 import {TextField, Button, Typography, Grid} from '@mui/material';
-import {loginUser, registerNewUser} from "../service/apiService";
+import {registerNewUser} from "../service/apiService";
 import {useAuth} from "../auth/AuthProvider";
 import {useNavigate} from "react-router-dom";
 
