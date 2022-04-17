@@ -1,15 +1,15 @@
 import {Grid} from "@mui/material";
 import Heading from "../common/Heading";
-import ChooseFunction from "../components/main/ChooseFunction";
+import {Outlet} from "react-router-dom";
 
-export default function MainPage(){
+export default function TodoPage(){
     return(
         <Grid container direction={'column'}>
             <Grid item xs={8}>
-                <Heading name={'SugarHome'}/>
+                <Heading name={'ToDo'}/>
             </Grid>
-            <Grid item xs={12}>
-                <ChooseFunction/>
+            <Grid item xs={10}>
+                <Outlet/>
             </Grid>
         </Grid>
     )

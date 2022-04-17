@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {TextField, Button, Typography, Grid} from '@mui/material';
-import {registerNewUser} from "../service/apiService";
-import {useAuth} from "../auth/AuthProvider";
+import {registerNewUser} from "../../service/apiService";
+import {useAuth} from "../../auth/AuthProvider";
 import {useNavigate} from "react-router-dom";
 
 export default function LoginRegisterForm() {
@@ -74,7 +74,10 @@ export default function LoginRegisterForm() {
                         label="Dein Nutzername"
                         type="text"
                         value={newUsername}
-                        onChange={ev => setNewUsername(ev.target.value)}/>
+                        onChange={ev => {
+                            setErrorName('')
+                            setNewUsername(ev.target.value)
+                        }}/>
                 </Grid>
                 {newUsername && <><Grid item xs={8}>
                     <TextField
