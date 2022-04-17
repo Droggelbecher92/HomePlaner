@@ -3,7 +3,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import FiberNewIcon from '@mui/icons-material/FiberNew';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
-import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function BottomNav(){

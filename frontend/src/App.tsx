@@ -7,7 +7,6 @@ import ChooseFunction from "./components/main/ChooseFunction";
 import Page from "./pages/Page";
 import LoginRegisterForm from "./components/main/LoginRegisterForm";
 import TodoGallery from "./components/todo/TodoGallery";
-import FullscreenGrid from "./components/FullscreenGrid";
 
 export default function App() {
     return (
