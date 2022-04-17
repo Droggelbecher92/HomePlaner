@@ -7,7 +7,7 @@ export default function ChooseFunction(){
     const nav = useNavigate()
 
     return(
-        <Grid container spacing={10} justifyContent={'center'} >
+        <Grid container spacing={10} justifyContent={'center'} marginTop={1} >
             {mainButtons.map(button =>
                 <Grid item xs={5} >
                     <Paper variant="elevation" elevation={2} style={{ height:'100%',padding:'1rem 0', margin:'0 -1rem '}} onClick={()=>nav(button.link)}>

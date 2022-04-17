@@ -3,8 +3,8 @@ import TodoColumn from "./TodoColumn";
 
 export default function TodoGallery(){
     return(<>
-        <Grid container justifyContent={'space-around'}marginBottom={2} marginTop={2}>
-            <Grid item xs={4} style={{height:'80%'}}>
+        <Grid container justifyContent={'space-around'} marginTop={2}>
+            <Grid item xs={4} style={{height:'100%'}}>
                 <Grid item>
                     <Typography variant={'h3'}>OPEN</Typography>
                 </Grid>
