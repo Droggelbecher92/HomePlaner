@@ -9,11 +9,11 @@ import LoginRegisterForm from "./components/main/LoginRegisterForm";
 import TodoGallery from "./components/todo/TodoGallery";
 
 export default function App() {
-    return(
+    return (
         <BrowserRouter>
             <AuthProvider>
                 <Routes>
-                    <Route path={''} element={<Page/>}>
+                    <Route path={'/'} element={<Page/>}>
                         <Route path={'login'} element={<LoginRegisterForm/>}/>
                         <Route path={''} element={<ChooseFunction/>}/>
                     </Route>
