@@ -4,7 +4,7 @@ import ToDoCard from "./ToDoCard";
 
 export default function TodoColumn(props:{status:string}){
     return(
-        <Grid container direction={"column"} style={{maxHeight:'70vh',overflow: 'scroll'}} wrap={'nowrap'}>
+        <Grid container direction={"column"} style={{maxHeight:'65vh',overflow: 'scroll'}} wrap={'nowrap'}>
             {
                 todoData
                     .filter(todo => todo.status===props.status)

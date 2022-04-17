@@ -7,13 +7,14 @@ import ChooseFunction from "./components/main/ChooseFunction";
 import Page from "./pages/Page";
 import LoginRegisterForm from "./components/main/LoginRegisterForm";
 import TodoGallery from "./components/todo/TodoGallery";
+import FullscreenGrid from "./components/FullscreenGrid";
 
 export default function App() {
-    return(
+    return (
         <BrowserRouter>
             <AuthProvider>
                 <Routes>
-                    <Route path={''} element={<Page/>}>
+                    <Route path={'/'} element={<Page/>}>
                         <Route path={'login'} element={<LoginRegisterForm/>}/>
                         <Route path={''} element={<ChooseFunction/>}/>
                     </Route>

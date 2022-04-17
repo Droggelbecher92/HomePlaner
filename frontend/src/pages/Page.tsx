@@ -4,7 +4,7 @@ import {Outlet} from "react-router-dom";
 
 export default function Page(){
     return(
-        <Grid container direction={'column'}>
+        <Grid container direction={'column'} xs={12}>
             <Grid item xs={8}>
                 <Heading name={'SugarHome'}/>
             </Grid>
