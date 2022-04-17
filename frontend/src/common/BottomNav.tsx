@@ -1,25 +1,31 @@
 import {BottomNavigation, BottomNavigationAction} from "@mui/material";
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import HomeIcon from '@mui/icons-material/Home';
+import FiberNewIcon from '@mui/icons-material/FiberNew';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
 
 export default function BottomNav(){
     return(
         <BottomNavigation >
             <BottomNavigationAction
-                label="Recents"
-                value="recents"
-                icon={<RestoreIcon />}
+                label="Home"
+                value="home"
+                icon={<HomeIcon />}
             />
             <BottomNavigationAction
-                label="Favorites"
-                value="favorites"
-                icon={<FavoriteIcon />}
+                label="New"
+                value="new"
+                icon={<FiberNewIcon />}
             />
             <BottomNavigationAction
-                label="Nearby"
-                value="nearby"
-                icon={<LocationOnIcon />}
+                label="User"
+                value="user"
+                icon={<PersonIcon />}
+            />
+            <BottomNavigationAction
+                label="Logout"
+                value="logout"
+                icon={<LogoutSharpIcon />}
             />
         </BottomNavigation>
     )

@@ -5,7 +5,7 @@ import BottomNav from "../common/BottomNav";
 
 export default function TodoPage(){
     return(
-            <Grid container direction={'column'} style={{width: '100vw'}} xs={14}>
+            <Grid container direction={'column'} style={{width: '100vw'}} xs={12}>
                 <Grid item xs={8}>
                     <Heading name={'ToDo'}/>
                 </Grid>

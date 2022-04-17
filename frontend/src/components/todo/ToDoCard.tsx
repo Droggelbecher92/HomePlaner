@@ -31,7 +31,7 @@ export default function ToDoCard(props:{infos:TodoItem}){
     };
 
     return(
-        <Card sx={{margin:'0.1rem', width:'90%',marginLeft:'5%'}} variant={'outlined'}>
+        <Card sx={{margin:'0.4rem 0', width:'90%',marginLeft:'5%'}} raised>
             <CardContent>
                 <Typography variant="h5" component="div">
                     {props.infos.task}
